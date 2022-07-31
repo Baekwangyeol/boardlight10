@@ -35,10 +35,21 @@ public class PostsService {
 
     /* Read 하나 상세*/
     @Transactional(readOnly = true)
-    public List<PostsResponseDto> read(Long id) {
-        return postsRepository.findById(id).stream()
-                .map(PostsResponseDto::new)
-                .collect(Collectors.toList());
+    public PostsResponseDto findById(Long id) {
+        Posts entity = postsRepository.findById(id).orElseThrow(() ->
+                new IllegalArgumentException("해당 게시물은 존재하지 않습니다. id=" + id));
+        return new PostsResponseDto(entity);
+    }
+
+    /*update 더티체킹*/
+    @Transactional
+    public Long update(Long id, PostsRequestDto requestDto){
+        Posts posts = postsRepository.findById(id).orElseThrow(() ->
+                new IllegalArgumentException("해당 게시물은 존재하지 않습니다. id= " + id));
+
+        posts.update(requestDto.getTitle(), requestDto.getWriter(), requestDto.getContent());
+
+        return id;
     }
 
 

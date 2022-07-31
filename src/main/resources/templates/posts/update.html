@@ -11,19 +11,20 @@
 
 <div class="container">
     <h2>게시판</h2>
-    <form action="#"  method="post" th:object="${posts}">
-        <input type="hidden" id="id" th:field="*{id}" disabled>
+    <form action="#" th:action="@{/posts/update/{Id}(Id=${posts.id})}" method="post" th:object="${posts}">
+        <input type="hidden" name="_method" value="put"/>
+        <input type="hidden" id="id" th:field="*{id}" >
         <div class="form-floating mb-3">
-            <input type="text" class="form-control" id="title" th:field="*{title}" disabled>
+            <input type="text" class="form-control" id="title" th:field="*{title}" >
             <label for="title">제목</label>
         </div>
         <div class="form-floating">
-            <textarea class="form-control" placeholder="Leave a comment here" id="content" style="height: 100px" th:field="*{content}" disabled></textarea>
+            <textarea class="form-control" placeholder="Leave a comment here" id="content" style="height: 100px" th:field="*{content}" ></textarea>
             <label for="content">내용</label>
         </div>
         <div class="text-end">
-            <a class="btn btn-primary" th:href="@{'/posts/update/' + ${posts.id}}">수정하러가기</a>
-            <a type="button" class="btn btn-primary" th:href="@{/posts/list}">취소</a>
+                <button type="submit" class="btn btn-primary">수정완료</button>
+              <a type="button" class="btn btn-primary" th:href="@{/posts/list}">취소</a>
         </div>
     </form>
 </div>

@@ -16,7 +16,6 @@ public class PostsResponseDto {
     private int view;
 
     /*Entity -->Dto */
-
     public PostsResponseDto(Posts posts) {
         this.id = posts.getId();
         this.title = posts.getTitle();

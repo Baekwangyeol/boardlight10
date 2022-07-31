@@ -6,8 +6,7 @@ import com.boardagain.light10.web.dto.PostsResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -33,5 +32,29 @@ public class PostsController {
         return "redirect:/posts/list";
     }
 
+    /* 상세 보기 */
+    @GetMapping("/posts/detail/{id}")
+    public String detail(@PathVariable Long id, Model model){
+        PostsResponseDto dto = postsService.findById(id);
+        model.addAttribute("posts",dto);
+        return "/posts/detail";
+    }
 
+    @GetMapping("posts/update/{id}")
+    public String updateForm(@PathVariable Long id, Model model){
+        PostsResponseDto dto = postsService.findById(id);
+        model.addAttribute("posts",dto);
+        return "/posts/update";
+    }
+
+    @PutMapping("/posts/update/{id}")
+    public String update(@PathVariable Long id, PostsRequestDto dto){
+        if(id ==null ){
+            return "/posts/list";
+        }else{
+            postsService.update(id,dto);
+            return "redirect:/posts/detail/"+id;
+        }
+
+    }
 }
