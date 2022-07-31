@@ -1,6 +1,6 @@
 package com.boardagain.light10.repository;
 
-import com.boardagain.light10.domain.Posts;
+import com.boardagain.light10.domain.posts.Posts;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
