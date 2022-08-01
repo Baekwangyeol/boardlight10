@@ -35,8 +35,9 @@ public class PostsController {
     /* 상세 보기 */
     @GetMapping("/posts/detail/{id}")
     public String detail(@PathVariable Long id, Model model){
+        postsService.updateView(id);
         PostsResponseDto dto = postsService.findById(id);
-        model.addAttribute("posts",dto);
+        model.addAttribute("posts", dto);
         return "/posts/detail";
     }
 
@@ -55,6 +56,11 @@ public class PostsController {
             postsService.update(id,dto);
             return "redirect:/posts/detail/"+id;
         }
+    }
 
+    @DeleteMapping("/posts/delete/{id}")
+    public String delete(@PathVariable Long id){
+        postsService.delete(id);
+        return "redirect:/posts/list";
     }
 }

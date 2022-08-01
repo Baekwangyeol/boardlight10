@@ -34,11 +34,11 @@ public class PostsService {
     }
 
     /* Read 하나 상세*/
-    @Transactional(readOnly = true)
+    @Transactional
     public PostsResponseDto findById(Long id) {
-        Posts entity = postsRepository.findById(id).orElseThrow(() ->
+        Posts posts = postsRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("해당 게시물은 존재하지 않습니다. id=" + id));
-        return new PostsResponseDto(entity);
+        return new PostsResponseDto(posts);
     }
 
     /*update 더티체킹*/
@@ -47,10 +47,22 @@ public class PostsService {
         Posts posts = postsRepository.findById(id).orElseThrow(() ->
                 new IllegalArgumentException("해당 게시물은 존재하지 않습니다. id= " + id));
 
-        posts.update(requestDto.getTitle(), requestDto.getWriter(), requestDto.getContent());
+        posts.update(requestDto.getTitle(), requestDto.getContent());
 
         return id;
     }
 
+    @Transactional
+    public int updateView(Long id){
+        return postsRepository.updateView(id);
+    }
 
+
+    @Transactional
+    public void delete(Long id) {
+        Posts posts = postsRepository.findById(id).orElseThrow(() ->
+                new IllegalArgumentException("해당 게시글이 존재하지 않습니다. id=" + id));
+
+        postsRepository.delete(posts);
+    }
 }
